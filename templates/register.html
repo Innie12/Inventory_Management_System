@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% block title %}Register - IMS{% endblock %} {% block
+content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div
+      class="card shadow"
+      style="
+        background: linear-gradient(135deg, #582841, #2b1e2f);
+        border: none;
+        border-radius: 1rem;
+        color: #fff;
+      "
+    >
+      <div class="card-body p-5">
+        <!-- Header -->
+        <div class="text-center mb-4">
+          <h3 style="color: #f99e4c">Create Account</h3>
+          <p style="color: #ccc">Join our inventory system</p>
+        </div>
+
+        <form method="POST">
+          {{ form.hidden_tag() }}
+
+          <!-- Username & Full Name -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" style="color: #f99e4c">
+                {{ form.username.label }}
+              </label>
+              {{ form.username( class="form-control", placeholder="Username",
+              style="background:#2B1E2F; color:#fff; border:1px solid #582841;"
+              ) }} {% if form.username.errors %}
+              <div class="text-danger small">{{ form.username.errors[0] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label" style="color: #f99e4c">
+                {{ form.full_name.label }}
+              </label>
+              {{ form.full_name( class="form-control", placeholder="Full Name",
+              style="background:#2B1E2F; color:#fff; border:1px solid #582841;"
+              ) }} {% if form.full_name.errors %}
+              <div class="text-danger small">
+                {{ form.full_name.errors[0] }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label" style="color: #f99e4c">
+              {{ form.email.label }}
+            </label>
+            {{ form.email( class="form-control",
+            placeholder="email@example.com", style="background:#2B1E2F;
+            color:#fff; border:1px solid #582841;" ) }} {% if form.email.errors
+            %}
+            <div class="text-danger small">{{ form.email.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3">
+            <label class="form-label" style="color: #f99e4c">
+              {{ form.phone.label }}
+            </label>
+            {{ form.phone( class="form-control", placeholder="+639XXXXXXXXX or
+            09XXXXXXXXX", style="background:#2B1E2F; color:#fff; border:1px
+            solid #582841;" ) }}
+            <small style="color: #aaa">
+              Format: +639XXXXXXXXX or 09XXXXXXXXX
+            </small>
+            {% if form.phone.errors %}
+            <div class="text-danger small">{{ form.phone.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" style="color: #f99e4c">
+                {{ form.password.label }}
+              </label>
+              {{ form.password( class="form-control", placeholder="Min 6
+              characters", style="background:#2B1E2F; color:#fff; border:1px
+              solid #582841;" ) }} {% if form.password.errors %}
+              <div class="text-danger small">{{ form.password.errors[0] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label" style="color: #f99e4c">
+                {{ form.confirm_password.label }}
+              </label>
+              {{ form.confirm_password( class="form-control",
+              placeholder="Confirm password", style="background:#2B1E2F;
+              color:#fff; border:1px solid #582841;" ) }} {% if
+              form.confirm_password.errors %}
+              <div class="text-danger small">
+                {{ form.confirm_password.errors[0] }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="d-grid mb-3">
+            {{ form.submit( class="btn", style=" background:
+            linear-gradient(90deg, #F36F38, #EF4648); color:#fff; border:none;
+            border-radius:0.5rem; font-weight:500; " ) }}
+          </div>
+
+          <!-- Footer -->
+          <div class="text-center">
+            <span style="color: #ccc">Already have an account?</span>
+            <a
+              href="{{ url_for('login') }}"
+              style="color: #f99e4c; text-decoration: none"
+            >
+              Login here
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

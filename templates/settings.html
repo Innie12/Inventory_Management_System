@@ -1,0 +1,117 @@
+<!-- templates/settings.html -->
+{% extends "base.html" %} {% block
+content %}
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <h2 class="mb-4"><i class="bi bi-gear"></i> Account Settings</h2>
+
+    <!-- Profile Settings -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">Profile Information</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <input type="hidden" name="settings_submit" value="1" />
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.full_name.label }}</label>
+            {{ form.full_name(class="form-control") }}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">{{ form.email.label }}</label>
+              {{ form.email(class="form-control") }}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">{{ form.phone.label }}</label>
+              {{ form.phone(class="form-control") }}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.currency.label }}</label>
+            {{ form.currency(class="form-select") }}
+          </div>
+
+          <hr />
+
+          <h6>Notification Preferences</h6>
+
+          <div class="mb-2">
+            <div class="form-check form-switch">
+              {{ form.enable_notifications(class="form-check-input") }}
+              <label class="form-check-label"
+                >{{ form.enable_notifications.label }}</label
+              >
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="form-check form-switch">
+              {{ form.enable_email_alerts(class="form-check-input") }}
+              <label class="form-check-label"
+                >{{ form.enable_email_alerts.label }}</label
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-check form-switch">
+              {{ form.enable_sms_alerts(class="form-check-input") }}
+              <label class="form-check-label"
+                >{{ form.enable_sms_alerts.label }}</label
+              >
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Save Settings
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Change Password -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Change Password</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          {{ password_form.hidden_tag() }}
+          <input type="hidden" name="password_submit" value="1" />
+
+          <div class="mb-3">
+            <label class="form-label"
+              >{{ password_form.current_password.label }}</label
+            >
+            {{ password_form.current_password(class="form-control") }}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label"
+                >{{ password_form.new_password.label }}</label
+              >
+              {{ password_form.new_password(class="form-control") }}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label"
+                >{{ password_form.confirm_password.label }}</label
+              >
+              {{ password_form.confirm_password(class="form-control") }}
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-warning">
+            <i class="bi bi-key"></i> Change Password
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

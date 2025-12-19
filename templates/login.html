@@ -1,0 +1,106 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div
+      class="card shadow"
+      style="
+        background: linear-gradient(135deg, #582841, #2b1e2f);
+        border: none;
+        border-radius: 1rem;
+        color: #fff;
+      "
+    >
+      <div class="card-body p-5">
+        <!-- Header -->
+        <div class="text-center mb-4">
+          <i class="bi bi-box-seam" style="font-size: 3rem; color: #f36f38"></i>
+          <h3 class="mt-2" style="color: #f99e4c">
+            Inventory Management System
+          </h3>
+          <p style="color: #ccc">Sign in to continue</p>
+        </div>
+
+        <form method="POST">
+          {{ form.hidden_tag() }}
+
+          <!-- Username -->
+          <div class="mb-3">
+            <label class="form-label" style="color: #f99e4c">
+              {{ form.username.label }}
+            </label>
+            <div class="input-group">
+              <span
+                class="input-group-text"
+                style="background: #374658; border: none; color: #f99e4c"
+              >
+                <i class="bi bi-person"></i>
+              </span>
+              {{ form.username( class="form-control", placeholder="Enter
+              username", style="background:#2B1E2F; color:#fff; border:1px solid
+              #582841;" ) }}
+            </div>
+            {% if form.username.errors %}
+            <div class="text-danger small">{{ form.username.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label" style="color: #f99e4c">
+              {{ form.password.label }}
+            </label>
+            <div class="input-group">
+              <span
+                class="input-group-text"
+                style="background: #374658; border: none; color: #f99e4c"
+              >
+                <i class="bi bi-lock"></i>
+              </span>
+              {{ form.password( class="form-control", placeholder="Enter
+              password", style="background:#2B1E2F; color:#fff; border:1px solid
+              #582841;" ) }}
+            </div>
+            {% if form.password.errors %}
+            <div class="text-danger small">{{ form.password.errors[0] }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Remember me -->
+          <div class="mb-3 form-check">
+            {{ form.remember_me(class="form-check-input") }}
+            <label class="form-check-label" style="color: #ccc">
+              {{ form.remember_me.label }}
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <div class="d-grid mb-3">
+            {{ form.submit( class="btn", style=" background:
+            linear-gradient(90deg, #CC2A49, #EF4648); color:#fff; border:none;
+            border-radius:0.5rem; font-weight:500; " ) }}
+          </div>
+
+          <!-- Links -->
+          <div class="text-center">
+            <a
+              href="{{ url_for('forgot_password') }}"
+              style="color: #f99e4c; text-decoration: none"
+            >
+              Forgot Password?
+            </a>
+            <span class="mx-2" style="color: #777">|</span>
+            <a
+              href="{{ url_for('register') }}"
+              style="color: #f36f38; text-decoration: none"
+            >
+              Create Account
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

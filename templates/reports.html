@@ -1,0 +1,181 @@
+{% extends "base.html" %} {% block title %}Reports - IMS{% endblock %} {% block
+content %}
+<div class="row mb-4">
+  <div class="col">
+    <h2><i class="bi bi-file-earmark-text"></i> Generate Reports</h2>
+    <p class="text-muted">Export inventory data in PDF, Excel, or CSV format</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <div class="card">
+      <div class="card-body p-4">
+        <form method="POST" action="{{ url_for('generate_report') }}">
+          {{ form.hidden_tag() }}
+
+          <div class="mb-4">
+            <label class="form-label fw-bold"
+              >{{ form.report_type.label }}</label
+            >
+            {{ form.report_type(class="form-select form-select-lg") }}
+            <div class="form-text">
+              Select the type of report you want to generate
+            </div>
+          </div>
+
+          <div class="row mb-3" id="categoryFilter" style="display: none">
+            <div class="col-md-12">
+              <label class="form-label">{{ form.category_id.label }}</label>
+              {{ form.category_id(class="form-select") }}
+            </div>
+          </div>
+
+          <div class="row mb-3" id="supplierFilter" style="display: none">
+            <div class="col-md-12">
+              <label class="form-label">{{ form.supplier_id.label }}</label>
+              {{ form.supplier_id(class="form-select") }}
+            </div>
+          </div>
+
+          <div class="row mb-3" id="dateRange" style="display: none">
+            <div class="col-md-6">
+              <label class="form-label">{{ form.date_from.label }}</label>
+              {{ form.date_from(class="form-control", type="date") }}
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">{{ form.date_to.label }}</label>
+              {{ form.date_to(class="form-control", type="date") }}
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold">{{ form.format.label }}</label>
+            <div class="btn-group w-100" role="group">
+              <input
+                type="radio"
+                class="btn-check"
+                name="format"
+                id="format_pdf"
+                value="pdf"
+                checked
+              />
+              <label class="btn btn-outline-danger" for="format_pdf">
+                <i class="bi bi-file-pdf"></i> PDF
+              </label>
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="format"
+                id="format_excel"
+                value="excel"
+              />
+              <label class="btn btn-outline-success" for="format_excel">
+                <i class="bi bi-file-excel"></i> Excel
+              </label>
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="format"
+                id="format_csv"
+                value="csv"
+              />
+              <label class="btn btn-outline-primary" for="format_csv">
+                <i class="bi bi-filetype-csv"></i> CSV
+              </label>
+            </div>
+          </div>
+
+          <div class="d-grid">
+            {{ form.submit(class="btn btn-primary btn-lg") }}
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Quick Reports -->
+    <div class="row g-3 mt-3">
+      <div class="col-md-4">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <i class="bi bi-file-pdf text-danger" style="font-size: 2rem"></i>
+            <h6 class="mt-2">Inventory Report</h6>
+            <p class="small text-muted">Complete product list</p>
+            <form method="POST" action="{{ url_for('generate_report') }}">
+              <input type="hidden" name="report_type" value="inventory" />
+              <input type="hidden" name="format" value="pdf" />
+              <button class="btn btn-sm btn-outline-danger">
+                Download PDF
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <i
+              class="bi bi-exclamation-triangle text-warning"
+              style="font-size: 2rem"
+            ></i>
+            <h6 class="mt-2">Low Stock Report</h6>
+            <p class="small text-muted">Items below reorder level</p>
+            <form method="POST" action="{{ url_for('generate_report') }}">
+              <input type="hidden" name="report_type" value="low_stock" />
+              <input type="hidden" name="format" value="pdf" />
+              <button class="btn btn-sm btn-outline-warning">
+                Download PDF
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <i
+              class="bi bi-file-excel text-success"
+              style="font-size: 2rem"
+            ></i>
+            <h6 class="mt-2">Excel Export</h6>
+            <p class="small text-muted">Full data export</p>
+            <form method="POST" action="{{ url_for('generate_report') }}">
+              <input type="hidden" name="report_type" value="inventory" />
+              <input type="hidden" name="format" value="excel" />
+              <button class="btn btn-sm btn-outline-success">
+                Download Excel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  document
+    .getElementById("report_type")
+    .addEventListener("change", function () {
+      const reportType = this.value;
+
+      // Hide all filters
+      document.getElementById("categoryFilter").style.display = "none";
+      document.getElementById("supplierFilter").style.display = "none";
+      document.getElementById("dateRange").style.display = "none";
+
+      // Show relevant filters
+      if (reportType === "category") {
+        document.getElementById("categoryFilter").style.display = "block";
+      } else if (reportType === "supplier") {
+        document.getElementById("supplierFilter").style.display = "block";
+      } else if (reportType === "transactions") {
+        document.getElementById("dateRange").style.display = "block";
+      }
+    });
+</script>
+{% endblock %}

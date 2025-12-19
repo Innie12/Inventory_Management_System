@@ -1,0 +1,314 @@
+/* static/css/custom.css */
+
+/* General Styles */
+body {
+  padding-bottom: 60px;
+  background-color: #f8f9fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Navbar */
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.2s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Tables */
+.table {
+  background-color: white;
+}
+
+.table thead th {
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Badges */
+.badge {
+  padding: 0.4em 0.8em;
+  font-weight: 500;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Category Cards */
+.category-card {
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+}
+
+.page-link {
+  border-radius: 6px;
+  margin: 0 3px;
+  color: #007bff;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+/* Loading Spinner */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+}
+
+/* ==================================================== */
+/* static/css/dashboard.css */
+
+/* Dashboard Statistics Cards */
+.stat-card {
+  border-radius: 12px;
+  border: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.stat-icon {
+  font-size: 3rem;
+  opacity: 0.3;
+}
+
+.stat-card h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.stat-card h6 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+}
+
+/* Chart Cards */
+.chart-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.chart-card .card-header {
+  border-bottom: 2px solid #f0f0f0;
+  padding: 1rem 1.25rem;
+}
+
+.chart-card .card-body {
+  padding: 1.5rem;
+}
+
+/* Chart Container with Resize */
+#stockChartContainer,
+#categoryChartContainer {
+  position: relative;
+  transition: height 0.3s ease;
+}
+
+#stockChartContainer.size-small,
+#categoryChartContainer.size-small {
+  height: 200px !important;
+}
+
+#stockChartContainer.size-medium,
+#categoryChartContainer.size-medium {
+  height: 300px !important;
+}
+
+#stockChartContainer.size-large,
+#categoryChartContainer.size-large {
+  height: 500px !important;
+}
+
+/* Data Tables on Dashboard */
+.table-hover tbody tr {
+  cursor: pointer;
+}
+
+/* Low Stock Badge */
+.badge.bg-danger {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Recent Transactions */
+.table tbody tr td {
+  vertical-align: middle;
+}
+
+/* Notification Badge */
+.navbar .badge {
+  font-size: 0.65rem;
+  padding: 0.25em 0.5em;
+}
+
+/* Dashboard Grid Spacing */
+.row.g-3 {
+  margin-bottom: 1rem;
+}
+
+/* Quick Stats Animation */
+.stat-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Chart Buttons */
+.chart-card .btn-group .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Print Styles for Reports */
+@media print {
+  .navbar,
+  .btn,
+  .pagination,
+  .card-header .btn-group {
+    display: none !important;
+  }
+
+  .card {
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+    page-break-inside: avoid;
+  }
+
+  body {
+    background-color: white;
+  }
+}
+
+/* Dashboard Responsive */
+@media (max-width: 992px) {
+  .stat-card h2 {
+    font-size: 2rem;
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+  }
+
+  #stockChartContainer,
+  #categoryChartContainer {
+    height: 250px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .chart-card .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .chart-card .btn-group .btn {
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+}
