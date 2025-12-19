@@ -1,6 +1,4 @@
-<!-- templates/products.html -->
 {% extends "base.html" %}
-
 {% block content %}
 <div class="row mb-3">
     <div class="col-md-6">
@@ -16,7 +14,7 @@
 <!-- Advanced Filters -->
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" class="row g-3">
+        <form method="GET" class="row g-3 align-items-center">
             <div class="col-md-3">
                 <input type="text" name="q" class="form-control" placeholder="Search products..." value="{{ q }}">
             </div>
@@ -24,9 +22,7 @@
                 <select name="category" class="form-select">
                     <option value="0">All Categories</option>
                     {% for cat in categories %}
-                    <option value="{{ cat.id }}" {% if cat.id == category_id %}selected{% endif %}>
-                        {{ cat.name }}
-                    </option>
+                        <option value="{{ cat.id }}" {% if cat.id == category_id %}selected{% endif %}>{{ cat.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -34,9 +30,7 @@
                 <select name="supplier" class="form-select">
                     <option value="0">All Suppliers</option>
                     {% for sup in suppliers %}
-                    <option value="{{ sup.id }}" {% if sup.id == supplier_id %}selected{% endif %}>
-                        {{ sup.name }}
-                    </option>
+                        <option value="{{ sup.id }}" {% if sup.id == supplier_id %}selected{% endif %}>{{ sup.name }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -71,16 +65,16 @@
 
 <!-- Products Table -->
 {% if pagination.items %}
-<div class="card">
+<div class="card shadow-sm">
     <div class="table-responsive">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
                 <tr>
                     <th>SKU</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Supplier</th>
-                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Qty</th>
                     <th class="text-end">Cost</th>
                     <th class="text-end">Price</th>
                     <th class="text-center">Actions</th>
@@ -93,42 +87,44 @@
                     <td>
                         <strong>{{ product.name }}</strong>
                         {% if product.is_featured %}
-                        <span class="badge bg-warning text-dark">Featured</span>
+                            <span class="badge bg-warning text-dark ms-1">Featured</span>
                         {% endif %}
                     </td>
                     <td>
                         {% if product.category %}
-                        <span class="badge" style="background-color: {{ product.category.color }};">
-                            {{ product.category.name }}
-                        </span>
+                            <span class="badge" style="background-color: {{ product.category.color }}; color:#fff;">
+                                {{ product.category.name }}
+                            </span>
                         {% else %}
-                        <span class="text-muted">-</span>
+                            <span class="text-muted">-</span>
                         {% endif %}
                     </td>
                     <td>{{ product.supplier.name if product.supplier else '-' }}</td>
                     <td class="text-center">
                         {% if product.is_low_stock %}
-                        <span class="badge bg-danger">{{ product.quantity }}</span>
+                            <span class="badge bg-danger">{{ product.quantity }}</span>
                         {% else %}
-                        <span class="badge bg-success">{{ product.quantity }}</span>
+                            <span class="badge bg-success">{{ product.quantity }}</span>
                         {% endif %}
                     </td>
                     <td class="text-end">{{ product.currency }} {{ "%.2f"|format(product.cost_price) }}</td>
                     <td class="text-end">{{ product.currency }} {{ "%.2f"|format(product.selling_price) }}</td>
                     <td class="text-center">
-                        <div class="btn-group btn-group-sm">
-                            <a href="{{ url_for('product_edit', pid=product.id) }}" class="btn btn-outline-primary" title="Edit">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <a href="{{ url_for('product_edit', pid=product.id) }}" class="btn btn-primary me-1" title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a href="{{ url_for('product_adjust', pid=product.id) }}" class="btn btn-outline-info" title="Adjust Stock">
-                                <i class="bi bi-plus-minus"></i>
+                            <a href="{{ url_for('product_adjust', pid=product.id) }}" class="btn btn-info me-1" title="Adjust Stock">
+                                <i class="bi bi-plus"></i><i class="bi bi-dash"></i>
                             </a>
                             <form method="POST" action="{{ url_for('product_delete', pid=product.id) }}" style="display:inline;" onsubmit="return confirm('Delete this product?');">
-                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">
+                                <button type="submit" class="btn btn-danger" title="Delete">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
                         </div>
+                        
+                        
                     </td>
                 </tr>
                 {% endfor %}

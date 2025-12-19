@@ -1,4 +1,5 @@
-{% extends "base.html" %}{% block content %}
+{% extends "base.html" %}
+{% block content %}
 <div class="row mb-3">
   <div class="col-md-6">
     <h2><i class="bi bi-bell"></i> Notifications</h2>
@@ -9,7 +10,7 @@
       action="{{ url_for('notifications_read_all') }}"
       style="display: inline"
     >
-      <button type="submit" class="btn btn-outline-primary">
+      <button type="submit" class="btn btn-outline-warning">
         <i class="bi bi-check-all"></i> Mark All as Read
       </button>
     </form>
@@ -20,34 +21,36 @@
 <div class="list-group">
   {% for notification in pagination.items %}
   <div
-    class="list-group-item {% if not notification.is_read %}list-group-item-primary{% endif %}"
+    class="list-group-item {% if not notification.is_read %}bg-dark border-warning{% else %}bg-dark border-secondary{% endif %} text-white"
+    style="border-width: 1px;"
   >
     <div class="d-flex w-100 justify-content-between align-items-start">
       <div class="flex-grow-1">
         <h6 class="mb-1">
           {% if notification.type == 'low_stock' %}
-          <i class="bi bi-exclamation-triangle text-warning"></i>
+          <i class="bi bi-exclamation-triangle" style="color:#EF4648"></i>
           {% elif notification.type == 'new_product' %}
-          <i class="bi bi-box text-success"></i>
+          <i class="bi bi-box" style="color:#F36F38"></i>
           {% else %}
-          <i class="bi bi-info-circle text-info"></i>
-          {% endif %} {{ notification.title }}
+          <i class="bi bi-info-circle" style="color:#F99E4C"></i>
+          {% endif %}
+          {{ notification.title }}
         </h6>
         <p class="mb-1">{{ notification.message }}</p>
         <small class="text-muted"
-          >{{ notification.created_at.strftime('%B %d, %Y at %I:%M %p')
-          }}</small
+          >{{ notification.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small
         >
       </div>
       <div class="ms-3">
         {% if not notification.is_read %}
         <button
-          class="btn btn-sm btn-outline-primary"
+          class="btn btn-sm btn-outline-warning"
           onclick="markAsRead({{ notification.id }})"
         >
           <i class="bi bi-check"></i>
         </button>
-        {% endif %} {% if notification.link %}
+        {% endif %}
+        {% if notification.link %}
         <a
           href="{{ notification.link }}"
           class="btn btn-sm btn-outline-secondary"
@@ -70,15 +73,15 @@
       <a
         class="page-link"
         href="{{ url_for('notifications', page=pagination.prev_num) }}"
-        >Previous</a
-      >
+        style="background-color:#2B1E2F; color:#F99E4C; border-color:#582841;"
+      >Previous</a>
     </li>
     {% endif %}
 
     <li class="page-item active">
-      <span class="page-link"
-        >{{ pagination.page }} / {{ pagination.pages }}</span
-      >
+      <span class="page-link" style="background-color:#F36F38; color:#fff;">
+        {{ pagination.page }} / {{ pagination.pages }}
+      </span>
     </li>
 
     {% if pagination.has_next %}
@@ -86,18 +89,22 @@
       <a
         class="page-link"
         href="{{ url_for('notifications', page=pagination.next_num) }}"
-        >Next</a
-      >
+        style="background-color:#2B1E2F; color:#F99E4C; border-color:#582841;"
+      >Next</a>
     </li>
     {% endif %}
   </ul>
 </nav>
-{% endif %} {% else %}
-<div class="alert alert-info text-center">
-  <i class="bi bi-bell-slash" style="font-size: 3rem"></i>
+{% endif %}
+{% else %}
+<div class="alert text-center" style="background-color:#2B1E2F; color:#F99E4C;">
+  <i class="bi bi-bell-slash" style="font-size: 3rem;"></i>
   <p class="mt-2">No notifications yet!</p>
 </div>
-{% endif %} {% endblock %} {% block extra_js %}
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
 <script>
   function markAsRead(notifId) {
     fetch(`/notifications/${notifId}/read`, {

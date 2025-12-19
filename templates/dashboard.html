@@ -1,290 +1,176 @@
 {% extends "base.html" %}
- {%
-block content %}
+{% block content %}
+
 <div class="row mb-4">
   <div class="col">
-    <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
-    <p class="text-muted">Welcome back, {{ current_user.username }}!</p>
+    <h2 style="color:#F99E4C"><i class="bi bi-speedometer2"></i> Dashboard</h2>
+    <p style="color:#aaa">Welcome back, {{ current_user.username }}!</p>
   </div>
 </div>
 
 <!-- Statistics Cards -->
 <div class="row g-3 mb-4">
   <div class="col-md-3">
-    <div class="card stat-card bg-primary text-white h-100">
+    <div class="card stat-card text-white h-100" style="background:linear-gradient(135deg,#CC2A49,#EF4648); border:none;">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <h6 class="text-white-50 mb-1">Total Products</h6>
             <h2 class="mb-0 fw-bold">{{ total_products }}</h2>
           </div>
-          <div class="stat-icon">
-            <i class="bi bi-box-seam"></i>
-          </div>
+          <i class="bi bi-box-seam fs-1 opacity-75"></i>
         </div>
       </div>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="card stat-card bg-success text-white h-100">
+    <div class="card stat-card text-white h-100" style="background:linear-gradient(135deg,#F99E4C,#F36F38); border:none;">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <h6 class="text-white-50 mb-1">Categories</h6>
             <h2 class="mb-0 fw-bold">{{ total_categories }}</h2>
           </div>
-          <div class="stat-icon">
-            <i class="bi bi-tags"></i>
-          </div>
+          <i class="bi bi-tags fs-1 opacity-75"></i>
         </div>
       </div>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="card stat-card bg-warning text-white h-100">
+    <div class="card stat-card text-white h-100" style="background:linear-gradient(135deg,#582841,#2B1E2F); border:none;">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <h6 class="text-white-50 mb-1">Low Stock</h6>
             <h2 class="mb-0 fw-bold">{{ low_stock_count }}</h2>
           </div>
-          <div class="stat-icon">
-            <i class="bi bi-exclamation-triangle"></i>
-          </div>
+          <i class="bi bi-exclamation-triangle fs-1 opacity-75"></i>
         </div>
       </div>
     </div>
   </div>
 
   <div class="col-md-3">
-    <div class="card stat-card bg-info text-white h-100">
+    <div class="card stat-card text-white h-100" style="background:linear-gradient(135deg,#EF4648,#CC2A49); border:none;">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
           <div>
             <h6 class="text-white-50 mb-1">Total Value</h6>
             <h2 class="mb-0 fw-bold">₱{{ "%.2f"|format(total_value) }}</h2>
           </div>
-          <div class="stat-icon">
-            <i class="bi bi-currency-dollar"></i>
-          </div>
+          <i class="bi bi-currency-dollar fs-1 opacity-75"></i>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Charts Section -->
+<!-- Charts -->
 <div class="row g-3 mb-4">
-  <!-- Stock Movement Chart -->
   <div class="col-md-8">
-    <div class="card chart-card">
-      <div
-        class="card-header bg-white d-flex justify-content-between align-items-center"
-      >
-        <h5 class="mb-0">
-          <i class="bi bi-graph-up"></i> Stock Movement (Last 6 Months)
-        </h5>
-        <div class="btn-group btn-group-sm">
-          <button
-            class="btn btn-outline-secondary"
-            onclick="resizeChart('stockChart', 'small')"
-          >
-            <i class="bi bi-dash-square"></i>
-          </button>
-          <button
-            class="btn btn-outline-secondary"
-            onclick="resizeChart('stockChart', 'medium')"
-          >
-            <i class="bi bi-square"></i>
-          </button>
-          <button
-            class="btn btn-outline-secondary"
-            onclick="resizeChart('stockChart', 'large')"
-          >
-            <i class="bi bi-plus-square"></i>
-          </button>
-          <button
-            class="btn btn-outline-primary"
-            onclick="saveChartImage('stockChart')"
-          >
-            <i class="bi bi-download"></i>
-          </button>
-        </div>
+    <div class="card" style="background:#2B1E2F; border:none; color:#fff;">
+      <div class="card-header" style="background:#582841; color:#ffffff;">
+        <i class="bi bi-graph-up"></i> Stock Movement (Last 6 Months)
       </div>
       <div class="card-body">
-        <div id="stockChartContainer" style="height: 300px">
-          <canvas id="stockChart"></canvas>
-        </div>
+        <div style="height:300px"><canvas id="stockChart"></canvas></div>
       </div>
     </div>
   </div>
 
-  <!-- Category Distribution Chart -->
   <div class="col-md-4">
-    <div class="card chart-card">
-      <div
-        class="card-header bg-white d-flex justify-content-between align-items-center"
-      >
-        <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Categories</h5>
-        <div class="btn-group btn-group-sm">
-          <button
-            class="btn btn-outline-secondary"
-            onclick="resizeChart('categoryChart', 'small')"
-          >
-            <i class="bi bi-dash-square"></i>
-          </button>
-          <button
-            class="btn btn-outline-secondary"
-            onclick="resizeChart('categoryChart', 'medium')"
-          >
-            <i class="bi bi-square"></i>
-          </button>
-          <button
-            class="btn btn-outline-primary"
-            onclick="saveChartImage('categoryChart')"
-          >
-            <i class="bi bi-download"></i>
-          </button>
-        </div>
+    <div class="card" style="background:#2B1E2F; border:none; color:#fff;">
+      <div class="card-header" style="background:#582841; color:#F99E4C;">
+        <i class="bi bi-pie-chart"></i> Categories
       </div>
       <div class="card-body">
-        <div id="categoryChartContainer" style="height: 300px">
-          <canvas id="categoryChart"></canvas>
-        </div>
+        <div style="height:300px"><canvas id="categoryChart"></canvas></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Data Tables -->
+<!-- Tables -->
 <div class="row g-3">
-  <!-- Low Stock Items -->
   <div class="col-md-5">
-    <div class="card">
-      <div class="card-header bg-warning text-white">
-        <h5 class="mb-0">
-          <i class="bi bi-exclamation-triangle"></i> Low Stock Alert
-        </h5>
+    <div class="card" style="background:#2B1E2F; border:none; color:#fff;">
+      <div class="card-header" style="background:#EF4648;">
+        <i class="bi bi-exclamation-triangle"></i> Low Stock Alert
       </div>
       <div class="card-body p-0">
         {% if low_stock_items %}
         <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Product</th>
-                <th class="text-center">Qty</th>
-                <th class="text-center">Reorder</th>
-                <th></th>
-              </tr>
+          <table class="table table-dark table-hover mb-0">
+            <thead>
+              <tr><th>Product</th><th class="text-center">Qty</th><th class="text-center">Reorder</th><th></th></tr>
             </thead>
             <tbody>
               {% for product in low_stock_items %}
               <tr>
-                <td>
-                  <strong>{{ product.name }}</strong><br />
-                  <small class="text-muted">{{ product.sku }}</small>
-                </td>
-                <td class="text-center">
-                  <span class="badge bg-danger">{{ product.quantity }}</span>
-                </td>
+                <td>{{ product.name }}</td>
+                <td class="text-center"><span class="badge" style="background:#CC2A49">{{ product.quantity }}</span></td>
                 <td class="text-center">{{ product.reorder_level }}</td>
-                <td>
-                  <a
-                    href="{{ url_for('product_adjust', pid=product.id) }}"
-                    class="btn btn-sm btn-primary"
-                  >
-                    <i class="bi bi-plus-circle"></i>
-                  </a>
-                </td>
+                <td><a href="{{ url_for('product_adjust', pid=product.id) }}" class="btn btn-sm" style="background:#F99E4C; color:#000"><i class="bi bi-plus"></i></a></td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
         {% else %}
-        <div class="text-center py-4 text-muted">
-          <i class="bi bi-check-circle" style="font-size: 2rem"></i>
-          <p class="mb-0 mt-2">All products are well stocked!</p>
-        </div>
+        <div class="text-center py-4 text-muted">All products are well stocked!</div>
         {% endif %}
       </div>
     </div>
   </div>
 
-  <!-- Recent Transactions -->
   <div class="col-md-7">
-    <div class="card">
-      <div class="card-header bg-info text-white">
-        <h5 class="mb-0">
-          <i class="bi bi-clock-history"></i> Recent Transactions
-        </h5>
+    <div class="card" style="background:#2B1E2F; border:none; color:#fff;">
+      <div class="card-header" style="background:#F36F38;">
+        <i class="bi bi-clock-history"></i> Recent Transactions
       </div>
       <div class="card-body p-0">
-        {% if recent_transactions %}
-        <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Date</th>
-                <th>Product</th>
-                <th>Type</th>
-                <th class="text-center">Qty</th>
-                <th>User</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for txn in recent_transactions %}
-              <tr>
-                <td>
-                  <small>{{ txn.created_at.strftime('%m/%d %H:%M') }}</small>
-                </td>
-                <td>
-                  <strong>{{ txn.product.name[:20] }}...</strong>
-                </td>
-                <td>
-                  {% if txn.transaction_type == 'in' %}
-                  <span class="badge bg-success">IN</span>
-                  {% elif txn.transaction_type == 'out' %}
-                  <span class="badge bg-danger">OUT</span>
-                  {% else %}
-                  <span class="badge bg-warning">ADJ</span>
-                  {% endif %}
-                </td>
-                <td class="text-center">{{ txn.quantity }}</td>
-                <td><small>{{ txn.user.username }}</small></td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        <div class="text-center py-4 text-muted">
-          <p>No recent transactions</p>
-        </div>
-        {% endif %}
+        <table class="table table-dark table-hover mb-0">
+          <thead>
+            <tr><th>Date</th><th>Product</th><th>Type</th><th class="text-center">Qty</th><th>User</th></tr>
+          </thead>
+          <tbody>
+            {% for txn in recent_transactions %}
+            <tr>
+              <td>{{ txn.created_at.strftime('%m/%d %H:%M') }}</td>
+              <td>{{ txn.product.name }}</td>
+              <td>
+                {% if txn.transaction_type == 'in' %}<span class="badge bg-success">IN</span>
+                {% elif txn.transaction_type == 'out' %}<span class="badge bg-danger">OUT</span>
+                {% else %}<span class="badge bg-warning">ADJ</span>{% endif %}
+              </td>
+              <td class="text-center">{{ txn.quantity }}</td>
+              <td>{{ txn.user.username }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-{% endblock %} {% block extra_js %}
+{% endblock %}
+
+{% block extra_js %}
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 <script>
-  // Chart data from backend
-  const chartData = {
-      months: {{ months|safe }},
-      stockIn: {{ stock_in|safe }},
-      stockOut: {{ stock_out|safe }},
-      categoryNames: {{ category_names|safe }},
-      categoryCounts: {{ category_counts|safe }}
-  };
+const chartData = {
+  months: {{ months|safe }},
+  stockIn: {{ stock_in|safe }},
+  stockOut: {{ stock_out|safe }},
+  categoryNames: {{ category_names|safe }},
+  categoryCounts: {{ category_counts|safe }}
+};
 
-  // Initialize charts
-  document.addEventListener('DOMContentLoaded', function() {
-      initStockChart(chartData);
-      initCategoryChart(chartData);
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  initStockChart(chartData);
+  initCategoryChart(chartData);
+});
 </script>
-{% endblock %}
+{% endblock %}yyy
